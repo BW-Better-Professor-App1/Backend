@@ -4,7 +4,7 @@ exports.seed = function (knex) {
     .then(function () {
       // Inserts seed entries
       return knex('Professors').insert([{
-        Firstname: 'John',
+        FirstName: 'John',
         LastName: 'Doe',
         Email: "test@email.com",
         Password: "HASHED.PASSWORD.HERE"

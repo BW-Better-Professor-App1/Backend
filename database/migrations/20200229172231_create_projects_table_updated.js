@@ -3,14 +3,14 @@ exports.up = function (knex) {
         tbl.increments()
 
         tbl.string('Name', 255).notNullable()
-        tbl.string('Deadline', 255)
+        tbl.string('Deadline', 255) // NEED TO FIX DATE
         tbl.string('Notes', 255)
 
         tbl.integer('Student_Id')
             .unsigned()
             .notNullable()
             .references('id')
-            .inTable('Professors')
+            .inTable('Students')
             .onUpdate('CASCADE')
             .onDelete('CASCADE');
 
@@ -18,7 +18,7 @@ exports.up = function (knex) {
             .unsigned()
             .notNullable()
             .references('id')
-            .inTable('Professors')
+            .inTable('Project-Categories')
             .onUpdate('CASCADE')
             .onDelete('CASCADE');
     })

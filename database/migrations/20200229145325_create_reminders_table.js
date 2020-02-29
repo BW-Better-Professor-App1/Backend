@@ -1,13 +1,12 @@
-
-exports.up = function(knex) {
+exports.up = function (knex) {
   return knex.schema.createTable('Reminders', tbl => {
-      tbl.increments();
+    tbl.increments();
 
-      tbl.string('Name', 255).notNullable()
-      tbl.string('Description', 255).notNullable()
-      tbl.datetime('Send_Date').notNullable()
+    tbl.string('Name', 255).notNullable()
+    tbl.string('Description', 255)
+    tbl.string('Send_Date').notNullable() // NEED DATE FIX
 
-      tbl.integer('Professor_Id')
+    tbl.integer('Professor_Id')
       .unsigned()
       .notNullable()
       .references('id')
@@ -17,6 +16,6 @@ exports.up = function(knex) {
   })
 };
 
-exports.down = function(knex) {
+exports.down = function (knex) {
   return knex.schema.dropTableIfExists('Reminders')
 };
