@@ -7,7 +7,7 @@ exports.seed = function (knex) {
         FirstName: 'John',
         LastName: 'Doe',
         Email: "test@email.com",
-        Password: "HASHED.PASSWORD.HERE"
+        Password: "$2a$10$/.0vo89bh8JtJrIj2znQ7Om4Se8el7zGWLT3LAiwproMgO7MBuHfy"
       }, ]);
     });
 };
