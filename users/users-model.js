@@ -3,6 +3,7 @@ const db = require('../database/dbConfig')
 module.exports = {
     getAll,
     findBy,
+    findByIncludePassword,
     addUser,
     updateUser,
     deleteUser
@@ -16,6 +17,10 @@ function findBy(filter) {
     return db('Professors').where(filter).select('id', 'firstName', 'lastName', 'email').first()
 }
 
+function findByIncludePassword(filter) {
+    return db('Professors').where(filter).first()
+}
+
 async function addUser(user) {
     const [id] = await db('Professors').insert(user, "id")
     return findBy({
@@ -24,9 +29,9 @@ async function addUser(user) {
 }
 
 async function updateUser(user) {
-    const same_password = await db('Professors').where({
+    const old_user = await findByIncludePassword({
         id: user.id
-    }).select('password')
+    })
 
     await db('Professors').where({
         id: user.id
@@ -34,7 +39,7 @@ async function updateUser(user) {
         firstName: user.firstName,
         lastName: user.lastName,
         email: user.email,
-        password: same_password
+        password: old_user.password
     })
 
     return findBy({

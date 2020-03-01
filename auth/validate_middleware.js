@@ -1,8 +1,11 @@
 const users = require('../users//users-model')
+const students = require('../students/students-model')
 
 module.exports = {
     validateId,
-    validateBody,
+    validateRegisterBody,
+    validateUpdateBody,
+    validateLoginBody,
     validateUniqueEmail
 }
 
@@ -42,7 +45,19 @@ function validateId(req, res, next) {
         })
 }
 
-function validateBody(req, res, next) {
+function validateRegisterBody(req, res, next) {
+    Object.keys(req.body).length === 0 && req.body.constructor === Object ?
+        res.status(400).json({
+            error: "Missing request body."
+        }) :
+        !req.body.firstName || !req.body.lastName || !req.body.email || !req.body.password ?
+        res.status(400).json({
+            error: "firstName, lastName, email, and password are required."
+        }) :
+        next()
+}
+
+function validateUpdateBody(req, res, next) {
     Object.keys(req.body).length === 0 && req.body.constructor === Object ?
         res.status(400).json({
             error: "Missing request body."
@@ -52,7 +67,18 @@ function validateBody(req, res, next) {
             error: "firstName, lastName, and email are required."
         }) :
         next()
+}
 
+function validateLoginBody(req, res, next) {
+    Object.keys(req.body).length === 0 && req.body.constructor === Object ?
+        res.status(400).json({
+            error: "Missing request body."
+        }) :
+        !req.body.email || !req.body.password ?
+        res.status(400).json({
+            error: "email and password are required"
+        }) :
+        next()
 }
 
 function validateUniqueEmail(req, res, next) {
@@ -60,8 +86,11 @@ function validateUniqueEmail(req, res, next) {
             email: req.body.email
         })
         .then(user => {
+            // is there a user with this email? if not, next(). Else:
             !user ? next() :
-                parseInt(req.params.id) === user.id ?
+                // does an id in the params exist, and does it equal the user's id?
+                // if true, next(). Else: the email is already in use
+                req.params.id && parseInt(req.params.id) === user.id ?
                 next() :
                 res.status(400).json({
                     error: "That email is already in use."

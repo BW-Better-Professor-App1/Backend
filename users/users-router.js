@@ -4,7 +4,7 @@ const users = require('./users-model')
 
 const {
     validateId,
-    validateBody,
+    validateUpdateBody,
     validateUniqueEmail
 } = require('../auth/validate_middleware')
 
@@ -38,7 +38,7 @@ router.get('/:id', validateId, (req, res) => {
 })
 
 // Update a user's info by passing id in params and other info in body
-router.put('/:id', validateId, validateBody, validateUniqueEmail, (req, res) => {
+router.put('/:id', validateId, validateUpdateBody, validateUniqueEmail, (req, res) => {
     users.updateUser({
             ...req.body,
             id: req.params.id
