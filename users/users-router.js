@@ -8,9 +8,7 @@ const students = require('../students/students-model')
 router.get('/', (req, res) => {
     users.getAll()
         .then(users => {
-            res.status(200).json({
-                ...users
-            })
+            res.status(200).json(users)
         })
         .catch(({
             name,
