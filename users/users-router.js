@@ -1,6 +1,7 @@
 const router = require("express").Router();
 
 const users = require('./users-model')
+const students = require('../students/students-model')
 
 const {
     validateId,
@@ -31,10 +32,17 @@ router.get('/', (req, res) => {
 
 // Get a user's info by passing id in the req.params
 router.get('/:id', validateId, (req, res) => {
-    res.status(200).json({
-        ...req.user,
-        students: req.students
-    })
+    students.getAll({
+            professor_Id: req.params.id
+        })
+        .then(students => {
+            res.status(200).json({
+                ...req.user,
+                students: students
+            })
+        })
+
+
 })
 
 // Update a user's info by passing id in params and other info in body
@@ -70,6 +78,19 @@ router.delete('/:id', validateId, (req, res) => {
         .then(count => {
             res.status(200).json({
                 message: `Successfully deleted ${count} user.`
+            })
+        })
+        .catch(({
+            name,
+            code,
+            message,
+            stack
+        }) => {
+            res.status(500).json({
+                name,
+                code,
+                message,
+                stack
             })
         })
 })

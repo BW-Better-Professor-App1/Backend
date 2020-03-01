@@ -4,7 +4,9 @@ module.exports = {
     getLiterallyAll,
     getAll,
     findBy,
-    addStudent
+    addStudent,
+    updateStudent,
+    deleteStudent
 }
 
 function getLiterallyAll() {
@@ -24,4 +26,25 @@ async function addStudent(student) {
     return findBy({
         id
     })
+}
+
+async function updateStudent(student) {
+    await db('Students').where({
+        id: student.id
+    }).update({
+        firstName: student.firstName,
+        lastName: student.lastName,
+        professor_Id: student.professor_Id,
+        email: student.email
+    })
+
+    return findBy({
+        id: student.id
+    })
+}
+
+function deleteStudent(id) {
+    return db('Students').where({
+        id: id
+    }).delete()
 }

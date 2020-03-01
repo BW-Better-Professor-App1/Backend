@@ -6,7 +6,10 @@ module.exports = {
     validateRegisterBody,
     validateUpdateBody,
     validateLoginBody,
-    validateUniqueEmail
+    validateUniqueEmail,
+    validateUniqueStudentEmail,
+    validateStudentBody,
+    validateStudentId,
 }
 
 function validateId(req, res, next) {
@@ -15,14 +18,8 @@ function validateId(req, res, next) {
         })
         .then(user => {
             if (user) {
-                students.getAll({
-                        professor_Id: req.params.id
-                    })
-                    .then(students => {
-                        req.user = user;
-                        req.students = students;
-                        next();
-                    })
+                req.user = user;
+                next();
             } else {
                 res.status(400).json({
                     error: "That user does not exist."
@@ -102,4 +99,69 @@ function validateUniqueEmail(req, res, next) {
                 error: "Couldn't check email uniqueness."
             })
         })
+}
+
+function validateUniqueStudentEmail(req, res, next) {
+    students.findBy({
+            email: req.body.email
+        })
+        .then(student => {
+            // is there a user with this email? if not, next(). Else:
+            !student ? next() :
+                // does an id in the params exist, and does it equal the student's id?
+                // if true, next(). Else: the email is already in use
+                req.params.id && parseInt(req.params.id) === student.id ?
+                next() :
+                res.status(400).json({
+                    error: "That email is already in use."
+                })
+
+        })
+        .catch(err => {
+            res.status(500).json({
+                error: "Couldn't check email uniqueness."
+            })
+        })
+}
+
+function validateStudentId(req, res, next) {
+    students.findBy({
+            id: req.params.id
+        })
+        .then(student => {
+            if (student) {
+                req.student = student;
+                next();
+            } else {
+                res.status(400).json({
+                    error: "That student does not exist."
+                })
+            }
+
+        })
+        .catch(({
+            name,
+            code,
+            message,
+            stack
+        }) => {
+            res.status(500).json({
+                name,
+                code,
+                message,
+                stack
+            })
+        })
+}
+
+function validateStudentBody(req, res, next) {
+    Object.keys(req.body).length === 0 && req.body.constructor === Object ?
+        res.status(400).json({
+            error: "Missing request body."
+        }) :
+        !req.body.firstName || !req.body.lastName || !req.body.email || !req.body.professor_Id || req.body.professor_Id !== parseInt(req.body.professor_Id) ?
+        res.status(400).json({
+            error: "firstName, lastName, email, and professor_Id are required. The professor_Id must be an integer."
+        }) :
+        next()
 }
