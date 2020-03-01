@@ -4,15 +4,15 @@ exports.seed = function (knex) {
     .then(function () {
       // Inserts seed entries
       return knex('Reminders').insert([{
-          Name: 'Give Billybob a referral.',
-          Description: "Billybob is finished with school in the summer. He's applied for a job at NASA.",
-          Professor_Id: 1,
-          Send_Date: "some date here"
+          name: 'Give Billybob a referral.',
+          description: "Billybob is finished with school in the summer. He's applied for a job at NASA.",
+          professor_Id: 1,
+          send_date: "some date here"
         },
         {
-          Name: 'Recommend Thomas Jefferson for president.',
-          Professor_Id: 1,
-          Send_Date: "some date here"
+          name: 'Recommend Thomas Jefferson for president.',
+          professor_Id: 1,
+          send_date: "some date here"
         },
       ]);
     });
