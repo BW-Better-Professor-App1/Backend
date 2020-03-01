@@ -7,11 +7,11 @@ module.exports = {
 }
 
 function getAll() {
-    return db('Professors')
+    return db('Professors').select('id', 'firstName', 'lastName', 'email')
 }
 
 function findBy(filter) {
-    return db('Professors').where(filter).first()
+    return db('Professors').where(filter).select('id', 'firstName', 'lastName', 'email').first()
 }
 
 async function addUser(user) {

@@ -1,13 +1,18 @@
 const db = require('../database/dbConfig')
 
 module.exports = {
+    getLiterallyAll,
     getAll,
     findBy,
     addStudent
 }
 
-function getAll() {
+function getLiterallyAll() {
     return db('Students')
+}
+
+function getAll(filter) {
+    return db('Students').where(filter)
 }
 
 function findBy(filter) {
