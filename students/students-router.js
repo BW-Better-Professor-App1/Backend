@@ -64,6 +64,19 @@ router.get('/:id', validateStudentId, (req, res) => {
                 projects: projects
             })
         })
+        .catch(({
+            name,
+            code,
+            message,
+            stack
+        }) => {
+            res.status(500).json({
+                name,
+                code,
+                message,
+                stack
+            })
+        })
 })
 
 // Update a student's info by passing id in params and other info in body
@@ -93,7 +106,7 @@ router.put('/:id', validateStudentId, validateStudentBody, validateUniqueStudent
         })
 })
 
-// Delete a user
+// Delete a student
 router.delete('/:id', validateStudentId, (req, res) => {
     students.deleteStudent(req.params.id)
         .then(count => {

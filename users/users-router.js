@@ -41,8 +41,19 @@ router.get('/:id', validateId, (req, res) => {
                 students: students
             })
         })
-
-
+        .catch(({
+            name,
+            code,
+            message,
+            stack
+        }) => {
+            res.status(500).json({
+                name,
+                code,
+                message,
+                stack
+            })
+        })
 })
 
 // Update a user's info by passing id in params and other info in body
