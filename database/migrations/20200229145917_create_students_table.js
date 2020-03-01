@@ -1,13 +1,12 @@
-
-exports.up = function(knex) {
+exports.up = function (knex) {
   return knex.schema.createTable('Students', tbl => {
-      tbl.increments()
+    tbl.increments()
 
-      tbl.string('FirstName', 255).notNullable()
-      tbl.string('LastName', 255).notNullable()
-      tbl.string('Email', 255).notNullable().unique()
+    tbl.string('firstName', 255).notNullable()
+    tbl.string('lastName', 255).notNullable()
+    tbl.string('email', 255).notNullable().unique()
 
-      tbl.integer('Professor_Id')
+    tbl.integer('Professor_Id')
       .unsigned()
       .notNullable()
       .references('id')
@@ -17,6 +16,6 @@ exports.up = function(knex) {
   })
 };
 
-exports.down = function(knex) {
+exports.down = function (knex) {
   return knex.schema.dropTableIfExists('Students')
 };

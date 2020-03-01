@@ -2,9 +2,9 @@ exports.up = function (knex) {
   return knex.schema.createTable('Reminders', tbl => {
     tbl.increments();
 
-    tbl.string('Name', 255).notNullable()
-    tbl.string('Description', 255)
-    tbl.string('Send_Date').notNullable() // NEED DATE FIX
+    tbl.string('name', 255).notNullable()
+    tbl.string('description', 255)
+    tbl.string('send_date').notNullable() // NEED DATE FIX
 
     tbl.integer('Professor_Id')
       .unsigned()

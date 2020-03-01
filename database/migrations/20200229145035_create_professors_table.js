@@ -1,15 +1,14 @@
-
-exports.up = function(knex) {
+exports.up = function (knex) {
   return knex.schema.createTable('Professors', tbl => {
-      tbl.increments();
+    tbl.increments();
 
-      tbl.string('FirstName', 255).notNullable()
-      tbl.string('LastName', 255).notNullable()
-      tbl.string('Email', 255).notNullable().unique()
-      tbl.string('Password', 255).notNullable()
+    tbl.string('firstName', 255).notNullable()
+    tbl.string('lastName', 255).notNullable()
+    tbl.string('email', 255).notNullable().unique()
+    tbl.string('password', 255).notNullable()
   })
 };
 
-exports.down = function(knex) {
+exports.down = function (knex) {
   return knex.schema.dropTableIfExists('Professors');
 };
