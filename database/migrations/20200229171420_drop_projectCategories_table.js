@@ -6,9 +6,9 @@ exports.down = function (knex) {
     return knex.schema.createTable('Project-Categories', tbl => {
         tbl.increments()
 
-        tbl.string('Name', 255).notNullable().unique()
+        tbl.string('name', 255).notNullable().unique()
 
-        tbl.integer('Project_Id')
+        tbl.integer('project_Id')
             .unsigned()
             .notNullable()
             .references('id')

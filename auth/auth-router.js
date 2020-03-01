@@ -3,16 +3,43 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
 const users = require("../users/users-model");
-const { jwtSecret } = require("../config/secrets");
+const {
+  jwtSecret
+} = require("../config/secrets");
 
 router.post("/register", (req, res) => {
   let user = req.body;
   const hash = bcrypt.hashSync(user.password, 10);
   user.password = hash;
+
+  users.addUser(user)
+    .then(newUser => {
+      const token = generateToken(newUser)
+      res.status(201).json({
+        message: "Successfully created a new user.",
+        token
+      })
+    })
+    .catch(({
+      name,
+      code,
+      message,
+      stack
+    }) => {
+      res.status(500).json({
+        name,
+        code,
+        message,
+        stack
+      })
+    })
 });
 
 router.post("/login", (req, res) => {
-  let { username, password } = req.body;
+  let {
+    username,
+    password
+  } = req.body;
 });
 
 function generateToken(user) {
