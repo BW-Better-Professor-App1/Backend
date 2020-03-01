@@ -4,16 +4,16 @@ exports.seed = function (knex) {
     .then(function () {
       // Inserts seed entries
       return knex('Project-Categories').insert([{
-          Name: 'Letter of recommendation'
+          name: 'Letter of recommendation'
         },
         {
-          Name: 'Referral'
+          name: 'Referral'
         },
         {
-          Name: 'Help / Advice / Mentorship'
+          name: 'Help / Advice / Mentorship'
         },
         {
-          Name: "Other"
+          name: "Other"
         }
       ]);
     });

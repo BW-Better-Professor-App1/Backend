@@ -2,12 +2,18 @@ const router = require("express").Router();
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
+const {
+  validateRegisterBody,
+  validateUniqueEmail,
+  validateLoginBody
+} = require('./validate_middleware')
+
 const users = require("../users/users-model");
 const {
   jwtSecret
 } = require("../config/secrets");
 
-router.post("/register", (req, res) => {
+router.post("/register", validateRegisterBody, validateUniqueEmail, (req, res) => {
   let user = req.body;
   const hash = bcrypt.hashSync(user.password, 10);
   user.password = hash;
@@ -35,13 +41,13 @@ router.post("/register", (req, res) => {
     })
 });
 
-router.post("/login", (req, res) => {
+router.post("/login", validateLoginBody, (req, res) => {
   let {
     email,
     password
   } = req.body;
 
-  users.findBy({
+  users.findByIncludePassword({
       email
     })
     .then(user => {

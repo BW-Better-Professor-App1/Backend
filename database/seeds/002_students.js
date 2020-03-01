@@ -4,22 +4,22 @@ exports.seed = function (knex) {
     .then(function () {
       // Inserts seed entries
       return knex('Students').insert([{
-          FirstName: 'Thomas',
-          LastName: 'Jefferson',
-          Email: "thomas.j@email.com",
-          Professor_Id: 1
+          firstName: 'Thomas',
+          lastName: 'Jefferson',
+          email: "thomas.j@email.com",
+          professor_Id: 1
         },
         {
-          FirstName: 'George',
-          LastName: 'Washington',
-          Email: "firstpres@email.com",
-          Professor_Id: 1
+          firstName: 'George',
+          lastName: 'Washington',
+          email: "firstpres@email.com",
+          professor_Id: 1
         },
         {
-          FirstName: 'Billy',
-          LastName: 'Bob',
-          Email: "i.like.trains@email.com",
-          Professor_Id: 1
+          firstName: 'Billy',
+          lastName: 'Bob',
+          email: "i.like.trains@email.com",
+          professor_Id: 1
         }
       ]);
     });

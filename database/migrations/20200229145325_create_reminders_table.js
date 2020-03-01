@@ -6,7 +6,7 @@ exports.up = function (knex) {
     tbl.string('description', 255)
     tbl.string('send_date').notNullable() // NEED DATE FIX
 
-    tbl.integer('Professor_Id')
+    tbl.integer('professor_Id')
       .unsigned()
       .notNullable()
       .references('id')

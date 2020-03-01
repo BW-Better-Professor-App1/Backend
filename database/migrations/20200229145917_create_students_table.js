@@ -6,7 +6,7 @@ exports.up = function (knex) {
     tbl.string('lastName', 255).notNullable()
     tbl.string('email', 255).notNullable().unique()
 
-    tbl.integer('Professor_Id')
+    tbl.integer('professor_Id')
       .unsigned()
       .notNullable()
       .references('id')
