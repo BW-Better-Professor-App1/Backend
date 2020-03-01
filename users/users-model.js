@@ -4,7 +4,8 @@ module.exports = {
     getAll,
     findBy,
     addUser,
-    updateUser
+    updateUser,
+    deleteUser
 }
 
 function getAll() {
@@ -39,4 +40,10 @@ async function updateUser(user) {
     return findBy({
         id: user.id
     })
+}
+
+function deleteUser(id) {
+    return db('Professors').where({
+        id: id
+    }).delete()
 }

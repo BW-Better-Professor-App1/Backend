@@ -60,6 +60,16 @@ router.put('/:id', validateId, validateBody, validateUniqueEmail, (req, res) => 
         })
 })
 
+// Delete a user
+router.delete('/:id', validateId, (req, res) => {
+    users.deleteUser(req.params.id)
+        .then(count => {
+            res.status(200).json({
+                message: `Successfully deleted ${count} user.`
+            })
+        })
+})
+
 module.exports = router;
 
 function validateId(req, res, next) {
