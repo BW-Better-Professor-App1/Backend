@@ -70,7 +70,7 @@ password: password
 ```js
 {
     firstName: STRING // required
-    lastName: String // required
+    lastName: STRING // required
     email: STRING // required. Must be unique
     professor_Id: NUMBER // required
 }
