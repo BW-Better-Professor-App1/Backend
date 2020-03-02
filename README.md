@@ -94,3 +94,4 @@ password: password
     professor_Id: NUMBER // required. This professor must exist before a new reminder can be added
 }
 ```
+![alt text](https://github.com/BW-Better-Professor-App1/Backend/blob/master/betterprofessor_dbdesign.png "Better Professor Database Design")
