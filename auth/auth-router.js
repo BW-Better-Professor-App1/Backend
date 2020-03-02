@@ -23,6 +23,9 @@ router.post("/register", validateRegisterBody, validateUniqueEmail, (req, res) =
       const token = generateToken(newUser)
       res.status(201).json({
         message: "Successfully created a new user.",
+        firstName: newUser.firstName,
+        lastName: newUser.lastName,
+        email: newUser.email,
         id: newUser.id,
         token
       })
@@ -56,6 +59,9 @@ router.post("/login", validateLoginBody, (req, res) => {
         const token = generateToken(user)
         res.status(200).json({
           message: `Welcome back, ${user.firstName}!`,
+          firstName: newUser.firstName,
+          lastName: newUser.lastName,
+          email: newUser.email,
           id: user.id,
           token
         })
