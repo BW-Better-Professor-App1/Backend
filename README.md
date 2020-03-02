@@ -81,7 +81,7 @@ password: password
     name: STRING // required
     deadline: STRING // a string for now until we can deal with date formats
     notes: STRING
-    project_category: NUMBER // required. This will be a preset list. See section below for a list of categories.
+    project_category: NUMBER // required. This will be a preset list. See below for list of categories.
     student_Id: NUMBER // required. This student must exist before a new project can be added
 }
 ```
