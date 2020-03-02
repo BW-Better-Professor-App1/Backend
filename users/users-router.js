@@ -2,6 +2,7 @@ const router = require("express").Router();
 
 const users = require('./users-model')
 const students = require('../students/students-model')
+const reminders = require('../reminders/reminders-model')
 
 const {
     validateId,
@@ -36,10 +37,17 @@ router.get('/:id', validateId, (req, res) => {
             professor_Id: req.params.id
         })
         .then(students => {
-            res.status(200).json({
-                ...req.user,
-                students: students
-            })
+            reminders.getAll({
+                    professor_Id: req.params.id
+                })
+                .then(reminders => {
+                    res.status(200).json({
+                        ...req.user,
+                        students: students,
+                        reminders: reminders
+                    })
+                })
+
         })
         .catch(({
             name,
