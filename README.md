@@ -85,7 +85,7 @@ password: password
     student_Id: NUMBER // required. This student must exist before a new project can be added
 }
 ```
-#### PROJECT CATEGORIES
+###### PROJECT CATEGORIES - Used when creating new projects.
 ```
 1: Letter of recommendation
 2: Referral
