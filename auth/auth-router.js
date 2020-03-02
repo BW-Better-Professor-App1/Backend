@@ -59,9 +59,9 @@ router.post("/login", validateLoginBody, (req, res) => {
         const token = generateToken(user)
         res.status(200).json({
           message: `Welcome back, ${user.firstName}!`,
-          firstName: newUser.firstName,
-          lastName: newUser.lastName,
-          email: newUser.email,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          email: user.email,
           id: user.id,
           token
         })
