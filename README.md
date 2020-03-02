@@ -16,7 +16,7 @@ password: password
 | POST   | `/api/auth/register`    |  Creates a new user and returns token         |
 
 
-#### User Routes
+#### User/Professor Routes
 
 | Method | Endpoint                |  Description                                                                   |
 | ------ | ----------------------- |  ----------------------------------------------------------------------------- |
@@ -44,16 +44,6 @@ password: password
 | POST   | `/api/projects`              |  Creates a new project                              |
 | PUT    | `/api/projects/:id`          |  Edits info for project with corresponding id       |
 | DELETE | `/api/projects/:id`          |  Deletes project with the corresponding id          |
-
-#### Project Category Routes (Not completed)
-
-| Method | Endpoint                     |  Description                                        |
-| ------ | -----------------------      |  -------------------------------------------------- |
-| GET    | `/api/categories`            |  Returns ALL categories in the database             |
-| GET    | `/api/categories:id`         |  Returns categories with the corresponding id       |
-| POST   | `/api/categories`            |  Creates a new category                             |
-| PUT    | `/api/categories/:id`        |  Edits category with corresponding id               |
-| DELETE | `/api/categories/:id`        |  Deletes category with the corresponding id         |
 
 #### Reminders Routes (Not completed)
 
@@ -83,13 +73,6 @@ password: password
     lastName: String // required
     email: STRING // required. Must be unique
     professor_Id: NUMBER // required
-}
-```
-#### PROJECT CATEGORY
-```js
-{
-    name: STRING // required
-    description: STRING
 }
 ```
 #### PROJECTS
