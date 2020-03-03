@@ -78,6 +78,31 @@ router.get('/:id', validateStudentId, (req, res) => {
         })
 })
 
+// Get a list of projects belonging to a specific student
+router.get('/:id/projects', validateStudentId, (req, res) => {
+    projects.getAll({
+            student_Id: req.params.id
+        })
+        .then(projects => {
+            res.status(200).json({
+                projects: projects
+            })
+        })
+        .catch(({
+            name,
+            code,
+            message,
+            stack
+        }) => {
+            res.status(500).json({
+                name,
+                code,
+                message,
+                stack
+            })
+        })
+})
+
 // Update a student's info by passing id in params and other info in body
 router.put('/:id', validateStudentId, validateStudentBody, (req, res) => {
     students.updateStudent({

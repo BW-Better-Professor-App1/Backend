@@ -64,6 +64,56 @@ router.get('/:id', validateId, (req, res) => {
         })
 })
 
+// Get a user's list of
+router.get('/:id/students', validateId, (req, res) => {
+    students.getAll({
+            professor_Id: req.params.id
+        })
+        .then(students => {
+            res.status(200).json({
+                students: students,
+            })
+        })
+        .catch(({
+            name,
+            code,
+            message,
+            stack
+        }) => {
+            res.status(500).json({
+                name,
+                code,
+                message,
+                stack
+            })
+        })
+})
+
+// Get a user's list of
+router.get('/:id/reminders', validateId, (req, res) => {
+    reminders.getAll({
+            professor_Id: req.params.id
+        })
+        .then(reminders => {
+            res.status(200).json({
+                reminders: reminders,
+            })
+        })
+        .catch(({
+            name,
+            code,
+            message,
+            stack
+        }) => {
+            res.status(500).json({
+                name,
+                code,
+                message,
+                stack
+            })
+        })
+})
+
 // Update a user's info by passing id in params and other info in body
 router.put('/:id', validateId, validateUpdateBody, validateUniqueEmail, (req, res) => {
     users.updateUser({
