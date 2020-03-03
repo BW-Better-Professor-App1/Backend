@@ -2,9 +2,10 @@ const request = require("supertest")
 const server = require('../api/server')
 const db = require('../database/dbConfig')
 
+let registerResponse;
+let loginResponse;
+
 describe('auth router', () => {
-    let registerResponse;
-    let loginResponse;
 
     it('should delete all records in the users table within the testing environment', async () => {
         await db('Professors').delete()
@@ -14,9 +15,9 @@ describe('auth router', () => {
         it('should register a new account and return status 201', async () => {
             await request(server).post('/api/auth/register')
                 .send({
-                    firstName: "a first name",
-                    lastName: "a last name",
-                    email: randomEmail(),
+                    firstName: "John",
+                    lastName: "Doe",
+                    email: "testing@email.com",
                     password: "password"
                 })
                 .then(res => {
@@ -62,15 +63,3 @@ describe('auth router', () => {
         })
     })
 })
-
-
-
-function randomEmail() {
-    const randomNum = Math.floor(Math.random() * Math.floor(99));
-    const randomNum2 = Math.floor(Math.random() * Math.floor(99));
-    const randomNumString = randomNum.toString();
-    const randomNumString2 = randomNum2.toString();
-    const email = `john${randomNumString}doe${randomNumString2}@email.com`
-
-    return email;
-}
