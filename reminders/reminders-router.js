@@ -1,20 +1,11 @@
 const router = require("express").Router();
-const students = require('./students-model')
-const projects = require('../projects/project-model')
+const reminders = require('./reminders-model')
 
-const {
-    validateStudentId,
-    validateStudentBody
-} = require('../auth/validate_middleware')
-
-// Add a student. Required in req.body: firstName, lastName, email, professor_Id
-router.post('/', validateStudentBody, (req, res) => {
-    students.addStudent(req.body)
-        .then(student => {
-            res.status(201).json({
-                message: "Successfully added a new student.",
-                student
-            })
+// Add a new reminder
+router.post('/', (req, res) => {
+    reminders.addReminder(req.body)
+        .then(reminder => {
+            res.status(201).json(reminder)
         })
         .catch(({
             name,
@@ -31,11 +22,11 @@ router.post('/', validateStudentBody, (req, res) => {
         })
 })
 
-// Get a list of all students
+// Get a list of all reminders
 router.get('/', (req, res) => {
-    students.getLiterallyAll()
-        .then(students => {
-            res.status(200).json(students)
+    reminders.getLiterallyAll()
+        .then(reminders => {
+            res.status(200).json(reminders)
         })
         .catch(({
             name,
@@ -52,16 +43,13 @@ router.get('/', (req, res) => {
         })
 })
 
-// Get a student's info by passing id in the req.params
-router.get('/:id', validateStudentId, (req, res) => {
-    projects.getAll({
-            student_Id: req.params.id
+// Get a reminder's info by passing id in the req.params
+router.get('/:id', (req, res) => {
+    reminders.findBy({
+            id: req.params.id
         })
-        .then(projects => {
-            res.status(200).json({
-                ...req.student,
-                projects: projects
-            })
+        .then(reminder => {
+            res.status(200).json(reminder)
         })
         .catch(({
             name,
@@ -78,16 +66,16 @@ router.get('/:id', validateStudentId, (req, res) => {
         })
 })
 
-// Update a student's info by passing id in params and other info in body
-router.put('/:id', validateStudentId, validateStudentBody, (req, res) => {
-    students.updateStudent({
+// Update a reminder
+router.put('/:id', (req, res) => {
+    reminders.updateReminder({
             ...req.body,
             id: req.params.id
         })
-        .then(student => {
+        .then(reminder => {
             res.status(200).json({
-                message: "Successfully updated student.",
-                updatedStudent: student
+                message: "Successfully updated reminder.",
+                updatedReminder: reminder
             })
         })
         .catch(({
@@ -105,12 +93,12 @@ router.put('/:id', validateStudentId, validateStudentBody, (req, res) => {
         })
 })
 
-// Delete a student
-router.delete('/:id', validateStudentId, (req, res) => {
-    students.deleteStudent(req.params.id)
+// Delete a reminder
+router.delete('/:id', (req, res) => {
+    reminders.deleteReminder(req.params.id)
         .then(count => {
             res.status(200).json({
-                message: `Successfully deleted ${count} student.`
+                message: `Successfully deleted ${count} reminder.`
             })
         })
         .catch(({

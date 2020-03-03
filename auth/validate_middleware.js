@@ -7,7 +7,6 @@ module.exports = {
     validateUpdateBody,
     validateLoginBody,
     validateUniqueEmail,
-    validateUniqueStudentEmail,
     validateStudentBody,
     validateStudentId,
 }
@@ -88,29 +87,6 @@ function validateUniqueEmail(req, res, next) {
                 // does an id in the params exist, and does it equal the user's id?
                 // if true, next(). Else: the email is already in use
                 req.params.id && parseInt(req.params.id) === user.id ?
-                next() :
-                res.status(400).json({
-                    error: "That email is already in use."
-                })
-
-        })
-        .catch(err => {
-            res.status(500).json({
-                error: "Couldn't check email uniqueness."
-            })
-        })
-}
-
-function validateUniqueStudentEmail(req, res, next) {
-    students.findBy({
-            email: req.body.email
-        })
-        .then(student => {
-            // is there a user with this email? if not, next(). Else:
-            !student ? next() :
-                // does an id in the params exist, and does it equal the student's id?
-                // if true, next(). Else: the email is already in use
-                req.params.id && parseInt(req.params.id) === student.id ?
                 next() :
                 res.status(400).json({
                     error: "That email is already in use."
