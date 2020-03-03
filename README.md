@@ -18,19 +18,19 @@ password: password
 
 #### User/Professor Routes
 
-| Method | Endpoint                |  Description                                                                   |
-| ------ | ----------------------- |  ----------------------------------------------------------------------------- |
-| GET    | `/api/user`             |  Returns ALL users registered                                                  |
-| GET    | `/api/user/:id`         |  Returns user info (includes the array of students) with the matching id       |
-| PUT    | `/api/user/:id`         |  Edits user with the matching id                                               |
-| DELETE | `/api/user/:id`         |  Deletes user with the matching id                                             |
+| Method | Endpoint                |  Description                                                                         |
+| ------ | ----------------------- |  ----------------------------------------------------------------------------------- |
+| GET    | `/api/user`             |  Returns ALL users registered                                                        |
+| GET    | `/api/user/:id`         |  Returns user info (includes array of students+reminders) with the matching id       |
+| PUT    | `/api/user/:id`         |  Edits user with the matching id                                                     |
+| DELETE | `/api/user/:id`         |  Deletes user with the matching id                                                   |
 
 #### Student Routes
 
 | Method | Endpoint                     |  Description                                                                       |
 | ------ | -----------------------      |  --------------------------------------------------------------------------------- |
 | GET    | `/api/students`              |  Returns ALL students in the database                                              |
-| GET    | `/api/students/:id`          |  Returns student info (includes the array of projects) with the corresponding id   |
+| GET    | `/api/students/:id`          |  Returns student info (includes array of projects) with the corresponding id       |
 | POST   | `/api/students`              |  Creates a new student                                                             |
 | PUT    | `/api/students/:id`          |  Edits info for student with corresponding id                                      |
 | DELETE | `/api/students/:id`          |  Deletes student with the corresponding id                                         |
@@ -45,7 +45,7 @@ password: password
 | PUT    | `/api/projects/:id`          |  Edits info for project with corresponding id       |
 | DELETE | `/api/projects/:id`          |  Deletes project with the corresponding id          |
 
-#### Reminders Routes (Not completed)
+#### Reminders Routes
 
 | Method | Endpoint                     |  Description                                         |
 | ------ | -----------------------      |  --------------------------------------------------- |
@@ -62,7 +62,7 @@ password: password
 {
     firstName: STRING // required
     lastName: STRING // required
-    email: STRING // required. Must be unique
+    email: STRING // required. must be unique
     password: STRING // required
 }
 ```
@@ -71,7 +71,7 @@ password: password
 {
     firstName: STRING // required
     lastName: STRING // required
-    email: STRING // required. Must be unique
+    email: STRING // required
     professor_Id: NUMBER // required
 }
 ```
