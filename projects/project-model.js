@@ -1,27 +1,41 @@
-const db = require('../database/dbConfig')
+const db = require("../database/dbConfig");
 
 module.exports = {
-    getLiterallyAll,
-    getAll,
-    findBy,
-    addProject
-}
+  getLiterallyAll,
+  getAll,
+  findBy,
+  addProject,
+  update,
+  remove
+};
 
 function getLiterallyAll() {
-    return db('Projects')
+  return db("Projects");
 }
 
 function getAll(filter) {
-    return db('Projects').where(filter)
+  return db("Projects").where(filter);
 }
 
-function findBy(filter) {
-    return db('Projects').where(filter).first()
+function findBy(id) {
+  return db("Projects")
+    .where({ id })
+    .first();
 }
 
 async function addProject(project) {
-    const [id] = await db('Projects').insert(project, "id")
-    return findBy({
-        id
-    })
+  const [id] = await db("Projects").insert(project, "id");
+  return findBy(id);
+}
+
+function update(changes, id) {
+  return db("Projects")
+    .where({ id })
+    .update(changes);
+}
+
+function remove(id) {
+  return db("Projects")
+    .where({ id })
+    .del();
 }
