@@ -118,7 +118,7 @@ describe('students router', () => {
                 })
         })
 
-        it('gets specific user info from the database', async () => {
+        it('gets specific students info from the database', async () => {
             await request(server).get(`/api/students/${createStudentResponse.body.student.id}`)
                 .set('Authorization', loginResponse.body.token)
                 .then(res => {
