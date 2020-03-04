@@ -64,44 +64,44 @@ describe('auth router', () => {
     })
 })
 
-describe('students router', () => {
-    let createStudentResponse;
+describe('reminders router', () => {
+    let createReminderResponse;
 
-    describe('POST /api/students/', () => {
+    describe('POST /api/reminders/', () => {
         it('returns status 201 created', async () => {
-            await request(server).post('/api/students')
+            await request(server).post('/api/reminders')
                 .set('Authorization', loginResponse.body.token)
                 .send({
-                    firstName: "Student fname",
-                    lastName: "Student lname",
-                    email: "something@email.com",
+                    name: "a project name",
+                    description: "some description",
+                    send_date: "some date here",
                     professor_Id: loginResponse.body.id
                 })
                 .then(res => {
-                    createStudentResponse = res;
+                    createReminderResponse = res;
                     expect(res.status).toBe(201)
                 })
         })
 
-        it('returns a success message and the added student', async () => {
-            expect(createStudentResponse.body).toEqual(expect.objectContaining({
-                message: "Successfully added a new student.",
-                student: createStudentResponse.body.student
+        it('returns a success message and the added reminder', async () => {
+            expect(createReminderResponse.body).toEqual(expect.objectContaining({
+                message: "Successfully added a new reminder.",
+                reminder: createReminderResponse.body.reminder
             }))
         })
     })
 
-    describe('GET /api/students/', () => {
+    describe('GET /api/reminders/', () => {
         it('returns status 200', async () => {
-            await request(server).get('/api/students/')
+            await request(server).get('/api/reminders/')
                 .set('Authorization', loginResponse.body.token)
                 .then(res => {
                     expect(res.status).toBe(200)
                 })
         })
 
-        it('gets a list of all students in the database', async () => {
-            await request(server).get('/api/students/')
+        it('gets a list of all reminders in the database', async () => {
+            await request(server).get('/api/reminders/')
                 .set('Authorization', loginResponse.body.token)
                 .then(res => {
                     expect(Array.isArray(res.body)).toBe(true)
@@ -109,59 +109,40 @@ describe('students router', () => {
         })
     })
 
-    describe('GET /api/students/:id', () => {
+    describe('GET /api/reminders/:id', () => {
         it('returns status 200 ok', async () => {
-            await request(server).get(`/api/students/${createStudentResponse.body.student.id}`)
+            await request(server).get(`/api/reminders/${createReminderResponse.body.reminder.id}`)
                 .set('Authorization', loginResponse.body.token)
                 .then(res => {
                     expect(res.status).toBe(200)
                 })
         })
 
-        it('gets specific students info from the database', async () => {
-            await request(server).get(`/api/students/${createStudentResponse.body.student.id}`)
+        it('gets specific reminder info from the database', async () => {
+            await request(server).get(`/api/reminders/${createReminderResponse.body.reminder.id}`)
                 .set('Authorization', loginResponse.body.token)
                 .then(res => {
                     expect(res.body).toEqual(expect.objectContaining({
-                        firstName: createStudentResponse.body.student.firstName,
-                        lastName: createStudentResponse.body.student.lastName,
-                        email: createStudentResponse.body.student.email,
-                        professor_Id: createStudentResponse.body.student.professor_Id,
-                        projects: expect.any(Array)
+                        name: createReminderResponse.body.reminder.name,
+                        description: createReminderResponse.body.reminder.description,
+                        send_date: createReminderResponse.body.reminder.send_date,
+                        professor_Id: createReminderResponse.body.reminder.professor_Id,
                     }))
                 })
         })
     })
 
-    describe('GET /api/students/:id/projects', () => {
-        it('returns status 200 ok', async () => {
-            await request(server).get(`/api/students/${createStudentResponse.body.student.id}/projects`)
-                .set('Authorization', loginResponse.body.token)
-                .then(res => {
-                    expect(res.status).toBe(200)
-                })
-        })
-
-        it('returns an array of projects belonging to a specific student', async () => {
-            await request(server).get(`/api/students/${createStudentResponse.body.student.id}/projects`)
-                .set('Authorization', loginResponse.body.token)
-                .then(res => {
-                    expect(res.body).toEqual(expect.any(Array))
-                })
-        })
-    })
-
-    describe('PUT /api/students/:id', () => {
+    describe('PUT /api/reminders/:id', () => {
         let updatedResponse;
 
         it('returns status 200 ok', async () => {
-            await request(server).put(`/api/students/${createStudentResponse.body.student.id}`)
+            await request(server).put(`/api/reminders/${createReminderResponse.body.reminder.id}`)
                 .set('Authorization', loginResponse.body.token)
                 .send({
-                    firstName: "updated first name",
-                    lastName: "updated last name",
-                    email: "updated@email.com",
-                    professor_Id: loginResponse.body.id
+                    name: "updated name",
+                    description: "updated description",
+                    send_date: "updated send date",
+                    professor_Id: loginResponse.body.id,
                 })
                 .then(res => {
                     updatedResponse = res;
@@ -169,19 +150,19 @@ describe('students router', () => {
                 })
         })
 
-        it('returns the updated student', async () => {
+        it('returns the updated reminder', async () => {
             expect(updatedResponse.body).toEqual(expect.objectContaining({
-                message: "Successfully updated student.",
-                updatedStudent: updatedResponse.body.updatedStudent
+                message: "Successfully updated reminder.",
+                updatedReminder: updatedResponse.body.updatedReminder
             }))
         })
     })
 
-    describe('DELETE /api/students/:id', () => {
+    describe('DELETE /api/reminders/:id', () => {
         let deletedResponse;
 
         it('returns status 200 ok', async () => {
-            await request(server).delete(`/api/students/${createStudentResponse.body.student.id}`)
+            await request(server).delete(`/api/reminders/${createReminderResponse.body.reminder.id}`)
                 .set('Authorization', loginResponse.body.token)
                 .then(res => {
                     deletedResponse = res;
