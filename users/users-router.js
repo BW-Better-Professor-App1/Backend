@@ -70,9 +70,7 @@ router.get('/:id/students', validateId, (req, res) => {
             professor_Id: req.params.id
         })
         .then(students => {
-            res.status(200).json({
-                students: students,
-            })
+            res.status(200).json(students)
         })
         .catch(({
             name,
@@ -95,9 +93,7 @@ router.get('/:id/reminders', validateId, (req, res) => {
             professor_Id: req.params.id
         })
         .then(reminders => {
-            res.status(200).json({
-                reminders: reminders,
-            })
+            res.status(200).json(reminders)
         })
         .catch(({
             name,

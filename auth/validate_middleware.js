@@ -9,6 +9,7 @@ module.exports = {
     validateUniqueEmail,
     validateStudentBody,
     validateStudentId,
+    validateProfessorId
 }
 
 function validateId(req, res, next) {
@@ -140,4 +141,34 @@ function validateStudentBody(req, res, next) {
             error: "firstName, lastName, email, and professor_Id are required. The professor_Id must be an integer."
         }) :
         next()
+}
+
+function validateProfessorId(req, res, next) {
+    users.findBy({
+            id: req.body.professor_Id
+        })
+        .then(user => {
+            if (user) {
+                req.user = user;
+                next();
+            } else {
+                res.status(400).json({
+                    error: "That professor does not exist."
+                })
+            }
+
+        })
+        .catch(({
+            name,
+            code,
+            message,
+            stack
+        }) => {
+            res.status(500).json({
+                name,
+                code,
+                message,
+                stack
+            })
+        })
 }
