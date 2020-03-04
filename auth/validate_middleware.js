@@ -7,11 +7,12 @@ module.exports = {
   validateUpdateBody,
   validateLoginBody,
   validateUniqueEmail,
-  validateUniqueStudentEmail,
   validateStudentBody,
   validateStudentId,
-  validateProjectBody
+  validateProjectBody,
+  validateProfessorId
 };
+
 
 function validateId(req, res, next) {
   users
@@ -101,29 +102,7 @@ function validateUniqueEmail(req, res, next) {
     });
 }
 
-function validateUniqueStudentEmail(req, res, next) {
-  students
-    .findBy({
-      email: req.body.email
-    })
-    .then(student => {
-      // is there a user with this email? if not, next(). Else:
-      !student
-        ? next()
-        : // does an id in the params exist, and does it equal the student's id?
-        // if true, next(). Else: the email is already in use
-        req.params.id && parseInt(req.params.id) === student.id
-        ? next()
-        : res.status(400).json({
-            error: "That email is already in use."
-          });
-    })
-    .catch(err => {
-      res.status(500).json({
-        error: "Couldn't check email uniqueness."
-      });
-    });
-}
+
 
 function validateStudentId(req, res, next) {
   students
@@ -177,3 +156,35 @@ function validateProjectBody(req, res, next) {
     next();
   }
 }
+
+
+function validateProfessorId(req, res, next) {
+    users.findBy({
+            id: req.body.professor_Id
+        })
+        .then(user => {
+            if (user) {
+                req.user = user;
+                next();
+            } else {
+                res.status(400).json({
+                    error: "That professor does not exist."
+                })
+            }
+
+        })
+        .catch(({
+            name,
+            code,
+            message,
+            stack
+        }) => {
+            res.status(500).json({
+                name,
+                code,
+                message,
+                stack
+            })
+        })
+}
+

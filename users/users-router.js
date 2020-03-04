@@ -2,6 +2,7 @@ const router = require("express").Router();
 
 const users = require('./users-model')
 const students = require('../students/students-model')
+const reminders = require('../reminders/reminders-model')
 
 const {
     validateId,
@@ -36,10 +37,63 @@ router.get('/:id', validateId, (req, res) => {
             professor_Id: req.params.id
         })
         .then(students => {
-            res.status(200).json({
-                ...req.user,
-                students: students
+            reminders.getAll({
+                    professor_Id: req.params.id
+                })
+                .then(reminders => {
+                    res.status(200).json({
+                        ...req.user,
+                        students: students,
+                        reminders: reminders
+                    })
+                })
+
+        })
+        .catch(({
+            name,
+            code,
+            message,
+            stack
+        }) => {
+            res.status(500).json({
+                name,
+                code,
+                message,
+                stack
             })
+        })
+})
+
+// Get a user's list of
+router.get('/:id/students', validateId, (req, res) => {
+    students.getAll({
+            professor_Id: req.params.id
+        })
+        .then(students => {
+            res.status(200).json(students)
+        })
+        .catch(({
+            name,
+            code,
+            message,
+            stack
+        }) => {
+            res.status(500).json({
+                name,
+                code,
+                message,
+                stack
+            })
+        })
+})
+
+// Get a user's list of
+router.get('/:id/reminders', validateId, (req, res) => {
+    reminders.getAll({
+            professor_Id: req.params.id
+        })
+        .then(reminders => {
+            res.status(200).json(reminders)
         })
         .catch(({
             name,

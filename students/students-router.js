@@ -5,11 +5,11 @@ const projects = require('../projects/project-model')
 const {
     validateStudentId,
     validateStudentBody,
-    validateUniqueStudentEmail
+    validateProfessorId
 } = require('../auth/validate_middleware')
 
 // Add a student. Required in req.body: firstName, lastName, email, professor_Id
-router.post('/', validateStudentBody, validateUniqueStudentEmail, (req, res) => {
+router.post('/', validateStudentBody, validateProfessorId, (req, res) => {
     students.addStudent(req.body)
         .then(student => {
             res.status(201).json({
@@ -79,8 +79,31 @@ router.get('/:id', validateStudentId, (req, res) => {
         })
 })
 
+// Get a list of projects belonging to a specific student
+router.get('/:id/projects', validateStudentId, (req, res) => {
+    projects.getAll({
+            student_Id: req.params.id
+        })
+        .then(projects => {
+            res.status(200).json(projects)
+        })
+        .catch(({
+            name,
+            code,
+            message,
+            stack
+        }) => {
+            res.status(500).json({
+                name,
+                code,
+                message,
+                stack
+            })
+        })
+})
+
 // Update a student's info by passing id in params and other info in body
-router.put('/:id', validateStudentId, validateStudentBody, validateUniqueStudentEmail, (req, res) => {
+router.put('/:id', validateStudentId, validateStudentBody, validateProfessorId, (req, res) => {
     students.updateStudent({
             ...req.body,
             id: req.params.id
