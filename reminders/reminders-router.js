@@ -10,7 +10,10 @@ const {
 router.post('/', validateRemindersBody, (req, res) => {
     reminders.addReminder(req.body)
         .then(reminder => {
-            res.status(201).json(reminder)
+            res.status(201).json({
+                message: "Successfully added a new reminder.",
+                reminder
+            })
         })
         .catch(({
             name,
