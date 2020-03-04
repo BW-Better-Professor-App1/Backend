@@ -17,7 +17,7 @@ describe('auth router', () => {
                 .send({
                     firstName: "John",
                     lastName: "Doe",
-                    email: "testing@email.com",
+                    email: randomizeName(),
                     password: "password"
                 })
                 .then(res => {
@@ -63,3 +63,13 @@ describe('auth router', () => {
         })
     })
 })
+
+function randomizeName() {
+    const randomNum = Math.floor(Math.random() * Math.floor(99));
+    const randomNum2 = Math.floor(Math.random() * Math.floor(99));
+    const randomNumString = randomNum.toString();
+    const randomNumString2 = randomNum2.toString();
+    const name = `john${randomNumString}doe${randomNumString2}@email.com`
+
+    return name;
+}

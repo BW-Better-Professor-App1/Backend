@@ -84,9 +84,7 @@ router.get('/:id/projects', validateStudentId, (req, res) => {
             student_Id: req.params.id
         })
         .then(projects => {
-            res.status(200).json({
-                projects: projects
-            })
+            res.status(200).json(projects)
         })
         .catch(({
             name,

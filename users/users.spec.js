@@ -17,7 +17,7 @@ describe('auth router', () => {
                 .send({
                     firstName: "John",
                     lastName: "Doe",
-                    email: "test@email.com",
+                    email: randomizeName(),
                     password: "password"
                 })
                 .then(res => {
@@ -183,10 +183,20 @@ describe('users router', () => {
                 })
         })
 
-        it('returns a successfully deleted message', async () => {
+        it('returns a "successfully deleted" message', async () => {
             expect(deletedResponse.body).toEqual(expect.objectContaining({
                 message: deletedResponse.body.message
             }))
         })
     })
 })
+
+function randomizeName() {
+    const randomNum = Math.floor(Math.random() * Math.floor(99));
+    const randomNum2 = Math.floor(Math.random() * Math.floor(99));
+    const randomNumString = randomNum.toString();
+    const randomNumString2 = randomNum2.toString();
+    const name = `john${randomNumString}doe${randomNumString2}@email.com`
+
+    return name;
+}
