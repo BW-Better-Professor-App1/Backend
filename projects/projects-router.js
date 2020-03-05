@@ -48,7 +48,7 @@ router.put("/:id", validateProjectBody, (req, res) => {
   projects
     .update(body, id)
     .then(updatedProject => {
-      res.status(200).json({ updatedProject });
+      res.status(200).json(updatedProject);
     })
     .catch(({ name, code, message, stack }) => {
       res.status(500).json({ name, code, message, stack });
