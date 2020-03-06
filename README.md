@@ -38,7 +38,7 @@ password: password
 | PUT    | `/api/students/:id`          |  Edits info for student with corresponding id                                      |
 | DELETE | `/api/students/:id`          |  Deletes student with the corresponding id                                         |
 
-#### Project Routes (Not completed)
+#### Project Routes
 
 | Method | Endpoint                     |  Description                                        |
 | ------ | -----------------------      |  -------------------------------------------------- |
@@ -47,6 +47,13 @@ password: password
 | POST   | `/api/projects`              |  Creates a new project                              |
 | PUT    | `/api/projects/:id`          |  Edits info for project with corresponding id       |
 | DELETE | `/api/projects/:id`          |  Deletes project with the corresponding id          |
+
+#### Category Routes 
+
+| Method | Endpoint                     |  Description                                         |
+| ------ | -----------------------      |  --------------------------------------------------- |
+| GET    | `/api/categories`            |  Returns a list of categories in the database        |
+| GET    | `/api/categories:id`         |  Returns a category with the corresponding id        |
 
 #### Reminders Routes
 
